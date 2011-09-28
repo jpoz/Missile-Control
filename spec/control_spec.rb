@@ -29,9 +29,10 @@ describe Control do
     
     it "should arm the next unarmed missile if no missiles are already armed" do
       @control.missiles.any? { |m| m.armed? }.should be_false
-      @control.missiles[0].should_receive(:arm!)
+      #@control.missiles[0].should_receive(:arm!)
       @control.missiles[0].should_receive(:fire!).with("Bieber")
       @control.fire!("Bieber")
+      @control.missiles[0].should be_armed
     end
     
   end
@@ -43,9 +44,10 @@ describe Control do
     end
     
     it "should arm all missiles and fire them" do
-      @control.missiles.each { |m| m.should_receive(:arm!) }
+      #@control.missiles.each { |m| m.should_receive(:arm!) }
       @control.missiles.each { |m| m.should_receive(:fire!) }
       @control.kill_everything!
+      @control.missiles.select { |m| m.armed? }.size.should == 9
     end
     
   end
